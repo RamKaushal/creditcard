@@ -32,6 +32,8 @@ class train_validator:
                             shutil.move(full_path,self.archive_path)
                             break 
           
-                 
+if __name__ == '__main__':
+     trail = train_validator("C:\\Users\\ramka\\Desktop\\Creditcard\\data","C:\\Users\\ramka\\Desktop\\Creditcard\\schema_training.json","C:\\Users\\ramka\\Desktop\\Creditcard\\data\\Archive","C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files") 
+     trail.valid()               
                 
 
