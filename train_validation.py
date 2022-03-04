@@ -4,43 +4,41 @@ import os
 import pandas as pd
 import shutil
 class train_validator:
-    #def __init__(self,path,config_path,archive_path,correct_path):
-    def __init__(self,path):
+    def __init__(self,path,config_path,archive_path,correct_path):
         self.path = path 
+        self.archive_path = archive_path
+        self.correct_path = correct_path
+        self.config_path = config_path
         log = mylogger()
     def valid(self):
         for i in os.listdir(self.path):
-            print(i)
-            """
-            count = 0
-            full_path = self.path+'\\'+i
-            raw_data = pd.read_csv(self.path+'\\'+i)
-            print(raw_data.head(5))
-            
-            con =  open(self.config_path).read()
-            configs = eval(con)
-            dtypes = raw_data.dtypes 
-            for i in range(dtypes):
-                    if 'int' or 'float' in dtypes[i]:
-                        temp = 'Integer'
-                        if configs['ColName'][i] == temp:
-                            count += 1
-                            if count<24:
-                                continue
+            if 'csv' in i:
+                count = 0
+                full_path = self.path+'\\'+i
+                raw_data = pd.read_csv(self.path+'\\'+i)
+                con =  open(self.config_path).read()
+                configs = eval(con)
+                emp_list = []
+                config_dtypes = configs['ColName']
+                for i in config_dtypes:
+                    emp_list.append(i)
+
+                for i in range(raw_data.shape[1]):
+                    if 'int' or 'float' in raw_data[i].dtype:
+                            temp = 'Integer'
+                            if emp_list[i] == temp:
+                                count += 1
+                                if count<24:
+                                    continue
+                                else:
+                                    shutil.move(full_path,self.correct_path)
+                                    
+
                             else:
-                                shutil.move(full_path,self.correct_path)
-
-                        else:
-                            shutil.move(full_path,self.archive_path)
-                            break 
-            """
+                                shutil.move(full_path,self.archive_path)
+                                break 
+                            
           
-<<<<<<< HEAD
 if __name__ == '__main__':
-     trail = train_validator("C:\\Users\\ramka\\Desktop\\Creditcard\\data") 
-     trail.valid()               
-=======
-                 
->>>>>>> parent of 7d7c008 (access issue yet to be resolved)
-                
-
+     trail = train_validator("C:\\Users\\ramka\\Desktop\\Creditcard\\data","C:\\Users\\ramka\\Desktop\\Creditcard\\schema_training.json","C:\\Users\\ramka\\Desktop\\Creditcard\\data\\Archive","C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files") 
+     trail.valid()  
