@@ -1,4 +1,4 @@
-from numpy import dtype
+from numpy import dtype, full_like
 from Logger import mylogger
 import os
 import pandas as pd
@@ -26,10 +26,12 @@ class train_validator:
                             if count<24:
                                 continue
                             else:
-                                shutil.move(full_path,self.correct_path)
+                                print("{} is a good file to read".format(full_path))
+                                #shutil.move(full_path,self.correct_path)
 
                         else:
-                            shutil.move(full_path,self.archive_path)
+                            print("{} if a corrrupted file at the coulmn {}".format(full_path,configs['ColName'][i]))
+                            #shutil.move(full_path,self.archive_path)
                             break 
           
 if __name__ == '__main__':
