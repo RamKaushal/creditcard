@@ -11,3 +11,7 @@ class mylogger:
         logger.warning(self.message)
         return self.message 
 
+if __name__ == '__main__':
+    log = mylogger()
+    b = log.logmessage("testing the loggger")
+    print(b)
