@@ -19,25 +19,30 @@ class train_validator:
                 con =  open(self.config_path).read()
                 configs = eval(con)
                 emp_list = []
+                dtypes_list = []
                 config_dtypes = configs['ColName']
                 for i in config_dtypes:
                     emp_list.append(i)
-
+                for i in raw_data.dtypes.values:
+                    dtypes_list.append(i)
+                
+                
                 for i in range(raw_data.shape[1]):
-                    if 'int' or 'float' in raw_data[i].dtype:
-                            temp = 'Integer'
-                            if emp_list[i] == temp:
+                    if 'int' or 'float64' in dtypes_list[i]:
                                 count += 1
-                                if count<24:
+                                if count<25:
                                     continue
+                            
                                 else:
                                     shutil.move(full_path,self.correct_path)
-                                    
+                                    print("file moved to accepted folder")
 
-                            else:
+                    else:
                                 shutil.move(full_path,self.archive_path)
+                                print("file is incorrect at column {}".format(emp_list[i]))
                                 break 
-                            
+               
+                           
           
 if __name__ == '__main__':
      trail = train_validator("C:\\Users\\ramka\\Desktop\\Creditcard\\data","C:\\Users\\ramka\\Desktop\\Creditcard\\schema_training.json","C:\\Users\\ramka\\Desktop\\Creditcard\\data\\Archive","C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files") 
