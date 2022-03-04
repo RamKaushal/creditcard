@@ -35,8 +35,12 @@ class train_validator:
                             break 
             """
           
+<<<<<<< HEAD
 if __name__ == '__main__':
      trail = train_validator("C:\\Users\\ramka\\Desktop\\Creditcard\\data") 
      trail.valid()               
+=======
+                 
+>>>>>>> parent of 7d7c008 (access issue yet to be resolved)
                 
 
