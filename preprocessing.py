@@ -5,6 +5,7 @@ from sklearn.decomposition import PCA
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
 class preprocesss:
     def __init__(self,correct_files_folder):
         self.correct_files_folder = correct_files_folder
@@ -27,6 +28,14 @@ class preprocesss:
             if int(elist[i]) >0:
                 final_data[i].fillna(final_data[i].mean(),inplace =True,axis = 1)
         return final_data
+    def categoricals(self,final_data):
+        label_encode =LabelEncoder()
+        final_data_categorical = [i for i in final_data.columns  if final_data.dtypes[i]=='object']
+        for i in final_data.columns:
+            if i in final_data_categorical:
+                final_data[i] = label_encode.fit_transform(final_data[i])
+       
+        return final_data
     def standard_scalar(self,final_data_to_scale):
         standard = StandardScaler()
         standard.fit_transform(final_data_to_scale)
@@ -43,7 +52,8 @@ class preprocesss:
         print(list_pca)
         plt.plot(list_pca)
         plt.show()
-
+    
+    
 
 
 
@@ -56,7 +66,8 @@ if __name__ == '__main__':
     pre = preprocesss('C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files')
     final_data = pre.merge()
     data_with_out_nulls = pre.null_checker(final_data)
-    data_after_scale = pre.standard_scalar(data_with_out_nulls)
+    data_categorical = pre.categoricals(data_with_out_nulls)
+    data_after_scale = pre.standard_scalar(data_categorical)
     data_after_pca = pre.pca(data_after_scale)
     
 
