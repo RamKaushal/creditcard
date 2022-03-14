@@ -52,7 +52,12 @@ class preprocesss:
         print(list_pca)
         plt.plot(list_pca)
         plt.show()
-    
+
+        new_pca_value = int(input("enter the number of PCA"))
+        pca_new = PCA(new_pca_value)
+        pca_new.fit_transform(final_data_after_scaling)
+        
+        return pca_new
     
 
 
