@@ -6,6 +6,7 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
+from sklearn.cluster import KMeans
 class preprocesss:
     def __init__(self,correct_files_folder):
         self.correct_files_folder = correct_files_folder
@@ -41,9 +42,9 @@ class preprocesss:
         standard.fit_transform(final_data_to_scale)
         return final_data_to_scale
     def pca(self,final_data_after_scaling):
-        pca = PCA((final_data.shape[1]) - 1)
+        pca = PCA((final_data_after_scaling.shape[1]) - 1)
         pca.fit(final_data_after_scaling)
-        data_after_pca = pca.transform(final_data_after_scaling)
+        #data_after_pca = pca.transform(final_data_after_scaling)
         initial = 0 
         list_pca = []
         for i in pca.explained_variance_ratio_:
@@ -52,23 +53,26 @@ class preprocesss:
         print(list_pca)
         plt.plot(list_pca)
         plt.show()
-    
-    
+        user_input = int(input("ENTER THE N COMPONENTS OF PCA"))
+        new_pca = PCA(n_components=user_input)
+        final_data = new_pca.fit_transform(final_data_after_scaling)
+        final_data_df = pd.DataFrame(final_data)
+        print(final_data_df.head(5))
+        
 
 
-
+if __name__ == '__main__':
+        pre = preprocesss('C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files')
+        final_data = pre.merge()
+        data_with_out_nulls = pre.null_checker(final_data)
+        data_categorical = pre.categoricals(data_with_out_nulls)
+        data_after_scale1 = pre.standard_scalar(data_categorical)
+        after_pca = pre.pca(data_after_scale1)
+        
 
     
             
 
-
-if __name__ == '__main__':
-    pre = preprocesss('C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files')
-    final_data = pre.merge()
-    data_with_out_nulls = pre.null_checker(final_data)
-    data_categorical = pre.categoricals(data_with_out_nulls)
-    data_after_scale = pre.standard_scalar(data_categorical)
-    data_after_pca = pre.pca(data_after_scale)
-    
+  
 
 
