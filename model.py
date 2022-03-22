@@ -11,13 +11,13 @@ class modelling:
         df = pd.read_csv(self.model_path)
         df1 = pd.read_csv(self.model_path)
         elist = []
-        for i in range(3,10):
+        for i in range(1,10):
             kmeans = KMeans(n_clusters=i)
             kmeans.fit(df)
             elist.append(kmeans.inertia_)
         plt.plot(elist)
         plt.show()
-        user_input = int(input())
+        user_input = int(input("enter number of clusters"))
         kmeans1 = KMeans(n_clusters=user_input)
         kmeans1.fit(df1)
         df1['labels'] = kmeans.labels_
@@ -33,4 +33,5 @@ if __name__ == '__main__':
     file_name = os.listdir("C:\\Users\\ramka\\Desktop\\Creditcard\\data\\dataformodel")[0]
     mod = modelling(file_path+file_name)
     df1 = mod.kmeans_classifier()
+    print(df1['labels']['3'])
     print(df1.head(5))
