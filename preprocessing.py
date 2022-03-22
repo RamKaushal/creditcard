@@ -57,7 +57,12 @@ class preprocesss:
         new_pca = PCA(n_components=user_input)
         final_data = new_pca.fit_transform(final_data_after_scaling)
         final_data_df = pd.DataFrame(final_data)
-        print(final_data_df.head(5))
+        #print(final_data_df.head(5))
+        
+
+        final_data_df.to_csv("C:\\Users\\ramka\\Desktop\\Creditcard\\data\\dataformodel\\model.csv")
+        return final_data_df
+    
         
 
 
