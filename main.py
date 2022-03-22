@@ -1,4 +1,2 @@
-from logger import mylogger
-
-if __name__ == '__main__':
-    
+import os
+print(os.listdir("C:\\Users\\ramka\\Desktop\\Creditcard\\data\\dataformodel")[0])
