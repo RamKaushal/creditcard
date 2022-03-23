@@ -28,7 +28,8 @@ class modelling:
         df1['labels'] = kmeans.labels_
         return df1
     def bagging_classifier(self,df1):
-        x_train,x_test,y_train,y_test = train_test_split(df1,train_size=0.8)       
+        x = df1[:,:-1]
+        x_train,x_test,y_train,y_test = train_test_split(df1[:,:-1],df1[:,-1],train_size=0.8)       
         bg = BaggingClassifier(base_estimator=DecisionTreeClassifier,n_estimators=10)
         bg.fit(x_train,y_train)
         y_pred = bg.predict(x_test)

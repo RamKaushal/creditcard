@@ -17,9 +17,10 @@ class preprocesss:
             
             data = pd.read_csv(self.correct_files_folder+"\\"+i)
             data.drop(columns=['ID'],axis=1,inplace=True)
+            output = data['default.payment.next.month']
             merge_list.append(data)
         final_data = pd.concat(merge_list,axis=0,ignore_index=True)
-        return final_data
+        return final_data,output
     def null_checker(self,final_data):
         elist = []
         nulls = final_data.isnull().sum()
@@ -60,19 +61,25 @@ class preprocesss:
         #print(final_data_df.head(5))
         
 
-        final_data_df.to_csv("C:\\Users\\ramka\\Desktop\\Creditcard\\data\\dataformodel\\model.csv")
+        
         return final_data_df
+    def add_output(self,final_data_after_pca,output_column):
+        final_data_after_pca['output'] = output_column
+        final_data_after_pca.to_csv("C:\\Users\\ramka\\Desktop\\Creditcard\\data\\dataformodel\\model.csv")
+        return final_data_after_pca
     
         
 
 
 if __name__ == '__main__':
         pre = preprocesss('C:\\Users\\ramka\\Desktop\\Creditcard\\data\\correct_files')
-        final_data = pre.merge()
+        final_data,output = pre.merge()
         data_with_out_nulls = pre.null_checker(final_data)
         data_categorical = pre.categoricals(data_with_out_nulls)
         data_after_scale1 = pre.standard_scalar(data_categorical)
         after_pca = pre.pca(data_after_scale1)
+        final_data_with_column = pre.add_output(after_pca,output)
+
         
 
     
